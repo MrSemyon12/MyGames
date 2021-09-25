@@ -16,15 +16,23 @@ class Ball:
         self.radius = randint(10, 100)
         self.color = (randint(0, 255), randint(0, 255), randint(0, 255))
         self.speed = 0
+        self.acceleration = 0.00005 * self.radius
 
     def draw_ball(self):
         pygame.draw.circle(screen, self.color, (self.pos_x, self.pos_y), self.radius)
 
     def fall_ball(self):
-        if self.pos_y < window_size[1]:
-            self.pos_y += 1
+        if self.pos_y < window_size[1] - self.radius:
+            self.pos_y += self.speed
+            self.speed += self.acceleration
         else:
-            self.pos_y = window_size[1]
+            if self.speed < 0.1:
+                return
+            self.pos_y = window_size[1] - self.radius
+            self.speed *= -1
+            self.speed /= 1.3
+            self.pos_y += self.speed
+            self.speed += self.acceleration
 
 
 def draw_balls():
@@ -38,6 +46,7 @@ def fall_balls():
 
 
 while True:
+
     screen.fill((0, 0, 0))
 
     for event in pygame.event.get():
