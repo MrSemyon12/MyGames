@@ -117,17 +117,21 @@ class Snake:
         return False
 
 
+def check_win(mng: Manager):
+    if mng.score == blocks_amount * blocks_amount - 4:
+        mng.is_running = False
+        manager.text_surface = manager.my_font.render(f'WINNER! score: {manager.score}', True, (255, 0, 0))
+
+
 manager = Manager()
 bg = Background()
 
 # main loop
 while True:
-
     bg.draw()
-    if manager.score == blocks_amount * blocks_amount - 4:
-        manager.is_running = False
-        manager.text_surface = manager.my_font.render(f'WINNER! score: {manager.score}', True, (255, 0, 0))
-        manager.current_snake.draw()
+    screen.blit(manager.text_surface, (0, 0))
+    check_win(manager)
+
     if manager.is_running:
         manager.current_food.draw()
         manager.current_snake.draw()
@@ -138,9 +142,6 @@ while True:
     else:
         manager.current_snake.draw()
     manager.check_collision()
-    screen.blit(manager.text_surface, (0, 0))
-    pygame.display.update()
-    update_snake += 0.6
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -154,3 +155,6 @@ while True:
                 manager.current_snake.direct = [0, 1]
             elif event.key == pygame.K_d and manager.current_snake.direct != [-1, 0]:
                 manager.current_snake.direct = [1, 0]
+
+    pygame.display.update()
+    update_snake += 0.6
