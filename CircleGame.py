@@ -26,8 +26,8 @@ class Ball:
             self.pos_y += self.speed
             self.speed += self.acceleration
         else:
-            if self.speed < 0.1:
-                return
+            if self.speed < 0.1 and self.radius > 0:
+                self.radius -= 1
             self.pos_y = window_size[1] - self.radius
             self.speed *= -1
             self.speed /= 1.3
@@ -37,7 +37,10 @@ class Ball:
 
 def draw_balls():
     for element in ball_list:
-        element.draw_ball()
+        if element.radius == 0:
+            ball_list.remove(element)
+        else:
+            element.draw_ball()
 
 
 def fall_balls():
