@@ -1,7 +1,7 @@
 import pygame
 from random import randint
 
-window_size = (1600, 900)
+window_size = (1400, 800)
 pygame.init()
 screen = pygame.display.set_mode(window_size)
 pygame.display.set_caption("CircleDrop")
